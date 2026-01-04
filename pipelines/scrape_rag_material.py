@@ -1,5 +1,5 @@
 from tavily import TavilyClient
-from load_env import load_env
+from utils.load_env import load_env
 from typing import List, Dict
 import math
 

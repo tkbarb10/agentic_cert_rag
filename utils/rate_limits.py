@@ -1,5 +1,5 @@
 from groq import Groq
-from load_env import load_env
+from utils.load_env import load_env
 
 load_env()
 
