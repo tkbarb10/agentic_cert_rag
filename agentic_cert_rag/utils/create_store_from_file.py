@@ -4,6 +4,14 @@ from langchain_text_splitters import RecursiveCharacterTextSplitter
 from langchain_core.documents import Document
 
 def process_documents(file_path: str):
+    """Create a Chroma vector store from a text file.
+
+    Args:
+        file_path: Path to the text file to ingest.
+
+    Returns:
+        Chroma vector store populated with the file's documents.
+    """
 
     with open(file_path, "r", encoding='utf-8') as f:
         text = f.read()

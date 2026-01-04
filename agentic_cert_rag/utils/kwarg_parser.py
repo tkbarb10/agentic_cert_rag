@@ -2,6 +2,14 @@ import ast
 from typing import List, Any
 
 def parse_value(kwarg_str: str) -> List[Any] | None:
+    """Parse a key=value string into a typed key/value pair.
+
+    Args:
+        kwarg_str: String in key=value form.
+
+    Returns:
+        Two-item list of key and parsed value, or None if malformed.
+    """
     kwarg_str = kwarg_str.strip()
     
     # Check for the equals sign first

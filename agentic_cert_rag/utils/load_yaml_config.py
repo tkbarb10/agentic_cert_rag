@@ -3,6 +3,14 @@ from pathlib import Path
 from typing import Union, Dict, Any
 
 def load_yaml_config(file_path: Union[str, Path]) -> Dict[str, Any]:
+    """Load and parse a YAML configuration file.
+
+    Args:
+        file_path: Path to the YAML file.
+
+    Returns:
+        Parsed YAML content as a dictionary.
+    """
     file_path = Path(file_path)
 
     if not file_path.exists():

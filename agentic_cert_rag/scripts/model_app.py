@@ -2,8 +2,9 @@ from groq import Groq
 import os
 from dotenv import load_dotenv
 import chromadb
-from utils.load_yaml_config import load_yaml_config
-from utils.prompt_builder import build_prompt
+from ..utils.load_yaml_config import load_yaml_config
+from ..utils.prompt_builder import build_prompt
+from ..paths import PROMPT_CONFIG_FPATH
 
 load_dotenv()
 
@@ -17,8 +18,17 @@ client = Groq(
     )
 
 def aya_gradio_chat(message, history):
+    """Stream a chat completion response for a Gradio chat session.
 
-    prompt = load_yaml_config('prompts/prompt.yaml')['basic_prompt']
+    Args:
+        message: Latest user message text.
+        history: Gradio chat history list of message dicts with roles and content.
+
+    Yields:
+        Incremental assistant response chunks as strings.
+    """
+
+    prompt = load_yaml_config(PROMPT_CONFIG_FPATH)["basic_prompt"]
     
     conversation_history = []
     for msg in history:

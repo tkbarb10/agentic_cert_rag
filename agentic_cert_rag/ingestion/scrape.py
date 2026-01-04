@@ -1,5 +1,5 @@
 from tavily import TavilyClient
-from load_env import load_env
+from ..utils.load_env import load_env
 from typing import List, Dict
 import math
 
@@ -8,6 +8,18 @@ load_env()
 tavily_client = TavilyClient()
 
 def website_map(root_url: str, instructions: str, max_depth: int=5, include_usage: bool=True, **kwargs):
+    """Fetch a crawl map of URLs starting at a root location.
+
+    Args:
+        root_url: Starting URL to map.
+        instructions: Provider-specific mapping instructions.
+        max_depth: Maximum depth to crawl from the root URL.
+        include_usage: Whether to include provider usage metadata in the response.
+        **kwargs: Additional keyword arguments passed to the map request.
+
+    Returns:
+        Mapping results returned by the Tavily client.
+    """
 
     try:
         print("Beginning map quest...")
@@ -30,6 +42,14 @@ def website_map(root_url: str, instructions: str, max_depth: int=5, include_usag
 # returns a dict object that includes the base_url, results (list of links), usage, response time in seconds and request_id
 
 def extract_links(url_list: List[str]) -> dict:
+    """Group URLs into batches of 20 for downstream extraction.
+
+    Args:
+        url_list: Flat list of URLs to group.
+
+    Returns:
+        Dictionary mapping group names to URL lists.
+    """
     url_dict = {}
     n_group = math.ceil(len(url_list) / 20)
 
@@ -43,6 +63,14 @@ def extract_links(url_list: List[str]) -> dict:
 
 
 def extract_content(url_dict: Dict[str, str]):
+    """Extract raw markdown content for each URL group.
+
+    Args:
+        url_dict: Mapping of group names to lists of URLs.
+
+    Returns:
+        Dictionary of extraction results keyed by group.
+    """
     result_set = {}
 
     for key, url_list in url_dict.items():
@@ -73,6 +101,18 @@ def extract_content(url_dict: Dict[str, str]):
 
 
 def raw_web_content(root_url: str, instructions: str, max_depth: int=5, include_usage: bool=True, **kwargs):
+    """Map a site, extract markdown content, and return raw strings.
+
+    Args:
+        root_url: Starting URL to map.
+        instructions: Provider-specific mapping instructions.
+        max_depth: Maximum depth to crawl from the root URL.
+        include_usage: Whether to include provider usage metadata in the response.
+        **kwargs: Additional keyword arguments passed to the map request.
+
+    Returns:
+        List of raw markdown content strings from extracted pages.
+    """
     map_results = website_map(
         root_url=root_url,
         instructions=instructions,
@@ -97,4 +137,3 @@ def raw_web_content(root_url: str, instructions: str, max_depth: int=5, include_
             content_strings.append(item['results'][0]['raw_content'])
     
     return content_strings
-

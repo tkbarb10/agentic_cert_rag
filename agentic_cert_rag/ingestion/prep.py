@@ -1,10 +1,9 @@
-from utils.load_yaml_config import load_yaml_config
-from utils.prompt_builder import build_prompt
-from load_env import load_env
-import os
-from paths import PROMPT_CONFIG_FPATH, OUTPUTS_DIR
+from ..utils.load_yaml_config import load_yaml_config
+from ..utils.prompt_builder import build_prompt
+from ..utils.load_env import load_env
+from ..paths import PROMPT_CONFIG_FPATH, OUTPUTS_DIR
 from groq import Groq
-from utils.token_count import get_token_count
+from ..utils.token_count import get_token_count
 
 load_env()
 
@@ -20,6 +19,17 @@ print(f"This is the system prompt sent to the LLM to prepare the web content str
 # make sure output is in markdown format
 
 def prepare_web_content(cleaned_content: str, model: str='openai/gpt-oss-120b', reasoning_effort: str='high', **kwargs):
+    """Send cleaned web content to the LLM for preprocessing and save output.
+
+    Args:
+        cleaned_content: Cleaned web content string to preprocess.
+        model: LLM model identifier to use.
+        reasoning_effort: Provider-specific reasoning effort setting.
+        **kwargs: Additional keyword arguments forwarded to the LLM call.
+
+    Returns:
+        Tuple of usage statistics and reasoning text when a response is saved.
+    """
 
     num_tokens = get_token_count(model=model, content=cleaned_content)
 
@@ -42,17 +52,18 @@ def prepare_web_content(cleaned_content: str, model: str='openai/gpt-oss-120b', 
                 **kwargs
             )
 
+            OUTPUTS_DIR.mkdir(parents=True, exist_ok=True)
             print(f"Response returned, please see output at {OUTPUTS_DIR}")
 
             updated_content = response.choices[0].message.content
             usage_stats = dict(response.usage) # type: ignore
             reasoning = response.choices[0].message.reasoning
 
-            with open(os.path.join(OUTPUTS_DIR, 'prepped_rag_material.md'), "w", encoding='utf-8') as f:
+            output_path = OUTPUTS_DIR / "prepped_rag_material.md"
+            with open(output_path, "w", encoding="utf-8") as f:
                 f.write(updated_content) # type: ignore
 
             return usage_stats, reasoning
         
         except Exception as e:
             print(f"Sorry, the request could not be completed.  This is the error: {e}.  Please take care of this and try again")
-

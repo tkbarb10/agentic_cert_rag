@@ -1,13 +1,14 @@
-from load_env import load_env
+from ..utils.load_env import load_env
 from groq import Groq
-from utils.load_yaml_config import load_yaml_config
-from utils.prompt_builder import build_prompt
+from ..utils.load_yaml_config import load_yaml_config
+from ..utils.prompt_builder import build_prompt
+from ..paths import PROMPT_CONFIG_FPATH
 from typing import List
-from utils.rate_limits import ping
+from ..utils.rate_limits import ping
 
 load_env()
 
-config = load_yaml_config("prompts/prompt.yaml")
+config = load_yaml_config(PROMPT_CONFIG_FPATH)
 scrape_parts = config.get("scrape_prompt", "Clean this string of html tags and other web artifacts")
 scrape_prompt = build_prompt(scrape_parts)
 
@@ -17,6 +18,14 @@ print(f"This is the current prompt sent to the LLM for cleaning up the raw web c
 client = Groq()
 
 def create_message_payload(web_content: List[str]):
+    """Build message payloads for LLM cleaning requests.
+
+    Args:
+        web_content: List of raw web content strings to clean.
+
+    Returns:
+        List of message payloads suitable for Groq chat completions.
+    """
     payloads = []
 
     for string in web_content:
@@ -30,6 +39,17 @@ def create_message_payload(web_content: List[str]):
     return payloads
 
 def cleaned_content(web_content: List[str], model: str='openai/gpt-oss-20b', reasoning_effort: str='low', temperature: float=0.5):
+    """Clean web content strings using a chat model and return joined output.
+
+    Args:
+        web_content: List of raw web content strings to clean.
+        model: LLM model identifier to use.
+        reasoning_effort: Provider-specific reasoning effort setting.
+        temperature: Sampling temperature for the model.
+
+    Returns:
+        Combined cleaned content as a single string.
+    """
     cleaned_content = []
 
     rate_limit = ping(model)

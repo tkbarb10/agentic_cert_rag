@@ -18,6 +18,16 @@ def format_prompt_section(lead_in: str, value: Union[str, List[str]]) -> str:
 
 
 def build_prompt(config: Dict[str, Any], context: Optional[List[str]]=None, strategy: Optional[str]=None) -> str:
+    """Assemble a system prompt from configuration and optional context.
+
+    Args:
+        config: Prompt configuration dictionary containing instructions and metadata.
+        context: Optional list of context strings to append.
+        strategy: Optional reasoning strategy key to apply from config.
+
+    Returns:
+        Fully assembled prompt string.
+    """
     prompt_parts = []
 
     role = config.get("role", "Helpful assistant that answers questions about Aya Healthcare")
