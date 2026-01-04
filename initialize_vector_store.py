@@ -5,6 +5,16 @@ from typing import Optional
 from utils.kwarg_parser import parse_value
 
 def initialize_embedding_model(model_name: str="sentence-transformers/all-MiniLM-L6-v2", encode_kwargs: dict={"normalize_embeddings": True}, show_progress: bool=True):
+    """Initialize a HuggingFace embedding model with device selection.
+
+    Args:
+        model_name: HuggingFace model identifier.
+        encode_kwargs: Keyword arguments passed to the encoder.
+        show_progress: Whether to show embedding progress output.
+
+    Returns:
+        Configured HuggingFaceEmbeddings instance.
+    """
 
     device = (
         "cuda"
@@ -25,6 +35,17 @@ def initialize_embedding_model(model_name: str="sentence-transformers/all-MiniLM
 
 
 def create_vector_store(persist_path: str, collection_name: str, embedding_model=None, db_kwargs: Optional[dict]=None):
+    """Create a Chroma vector store with optional metadata overrides.
+
+    Args:
+        persist_path: Directory for persisted Chroma data.
+        collection_name: Chroma collection name to create or load.
+        embedding_model: Embedding model used for vectorization.
+        db_kwargs: Additional keyword arguments for Chroma initialization.
+
+    Returns:
+        Initialized Chroma vector store.
+    """
     
     db_kwargs = db_kwargs or {}
 

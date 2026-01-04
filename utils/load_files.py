@@ -2,6 +2,14 @@ from pathlib import Path
 from typing import List, Union
 
 def load_files_as_list(documents_path: Union[str, Path]) -> List[str]:
+    """Load text/markdown files from a path into a list of strings.
+
+    Args:
+        documents_path: File or directory path containing documents to load.
+
+    Returns:
+        List of file contents as strings.
+    """
     root = Path(documents_path)
     file_list = []
 

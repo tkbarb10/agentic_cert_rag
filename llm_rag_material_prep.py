@@ -20,6 +20,17 @@ print(f"This is the system prompt sent to the LLM to prepare the web content str
 # make sure output is in markdown format
 
 def prepare_web_content(cleaned_content: str, model: str='openai/gpt-oss-120b', reasoning_effort: str='high', **kwargs):
+    """Send cleaned web content to the LLM for preprocessing and save output.
+
+    Args:
+        cleaned_content: Cleaned web content string to preprocess.
+        model: LLM model identifier to use.
+        reasoning_effort: Provider-specific reasoning effort setting.
+        **kwargs: Additional keyword arguments forwarded to the LLM call.
+
+    Returns:
+        Tuple of usage statistics and reasoning text when a response is saved.
+    """
 
     num_tokens = get_token_count(model=model, content=cleaned_content)
 
@@ -55,4 +66,3 @@ def prepare_web_content(cleaned_content: str, model: str='openai/gpt-oss-120b', 
         
         except Exception as e:
             print(f"Sorry, the request could not be completed.  This is the error: {e}.  Please take care of this and try again")
-
