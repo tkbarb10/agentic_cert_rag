@@ -2,7 +2,7 @@ from utils.load_yaml_config import load_yaml_config
 from utils.prompt_builder import build_prompt
 from utils.load_env import load_env
 import os
-from paths import PROMPT_CONFIG_FPATH, OUTPUTS_DIR
+from config.paths import PROMPT_CONFIG_FPATH, OUTPUTS_DIR
 from groq import Groq
 from utils.token_count import get_token_count
 
