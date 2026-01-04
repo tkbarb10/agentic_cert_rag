@@ -7,7 +7,7 @@ ROOT_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # CODE_DIR = os.path.join(ROOT_DIR, "code")
 
 # APP_CONFIG_FPATH = os.path.join(CODE_DIR, "config", "config.yaml")
-PROMPT_CONFIG_FPATH = os.path.join(ROOT_DIR, "prompts/prompt.yaml")
+PROMPT_CONFIG_FPATH = os.path.join(ROOT_DIR, "config", "prompts.yaml")
 
 
 OUTPUTS_DIR = os.path.join(ROOT_DIR, "outputs")

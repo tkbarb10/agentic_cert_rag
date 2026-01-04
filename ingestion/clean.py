@@ -1,13 +1,14 @@
 from utils.load_env import load_env
 from groq import Groq
 from utils.load_yaml_config import load_yaml_config
+from config.paths import PROMPT_CONFIG_FPATH
 from utils.prompt_builder import build_prompt
 from typing import List
 from utils.rate_limits import ping
 
 load_env()
 
-config = load_yaml_config("prompts/prompt.yaml")
+config = load_yaml_config(PROMPT_CONFIG_FPATH)
 scrape_parts = config.get("scrape_prompt", "Clean this string of html tags and other web artifacts")
 scrape_prompt = build_prompt(scrape_parts)
 

@@ -4,6 +4,7 @@ from dotenv import load_dotenv
 import chromadb
 from utils.load_yaml_config import load_yaml_config
 from utils.prompt_builder import build_prompt
+from config.paths import PROMPT_CONFIG_FPATH
 
 load_dotenv()
 
@@ -27,7 +28,7 @@ def aya_gradio_chat(message, history):
         Incremental assistant response chunks as strings.
     """
 
-    prompt = load_yaml_config('prompts/prompt.yaml')['basic_prompt']
+    prompt = load_yaml_config(PROMPT_CONFIG_FPATH)['basic_prompt']
     
     conversation_history = []
     for msg in history:
