@@ -120,7 +120,7 @@ def raw_web_content(root_url: str, instructions: str, max_depth: int=5, include_
         include_usage=include_usage
     )
 
-    url_list = map_results['results']
+    url_list = map_results['results'] # type: ignore
 
     url_dict = extract_links(
         url_list=url_list

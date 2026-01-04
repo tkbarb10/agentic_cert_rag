@@ -1,0 +1,11 @@
+- go back to initializing vector store and see if the main block can be simplified
+
+- update rest of scripts to work through terminal (or one main one to go through each).  make sure each one works either way
+
+- error handle text splitting in case of markdown syntax issues
+
+- set up store as retriever and update app to make this work all pretty like
+
+- then option to either load_publications (in rag_lesson) or scrape the content
+
+- Use claude for whole project to walk through, simplify and modernize
