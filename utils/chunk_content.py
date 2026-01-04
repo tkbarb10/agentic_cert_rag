@@ -2,6 +2,16 @@ from langchain_text_splitters import RecursiveCharacterTextSplitter, MarkdownHea
 from typing import List
 
 def chunk_markdown_text(paper_content: str | List[str], chunk_size: int=750, chunk_overlap: int=50):
+    """Split markdown text into chunks using header-aware splitting.
+
+    Args:
+        paper_content: Markdown string or list of markdown strings to split.
+        chunk_size: Maximum characters per chunk.
+        chunk_overlap: Overlap size between chunks.
+
+    Returns:
+        Flattened list of chunked documents.
+    """
 
     markdown_splitter = MarkdownHeaderTextSplitter(
         headers_to_split_on=[("#", "Main Topic"), ("##", "Subtopic")]

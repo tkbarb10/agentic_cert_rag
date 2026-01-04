@@ -17,6 +17,15 @@ client = Groq(
     )
 
 def aya_gradio_chat(message, history):
+    """Stream a chat completion response for a Gradio chat session.
+
+    Args:
+        message: Latest user message text.
+        history: Gradio chat history list of message dicts with roles and content.
+
+    Yields:
+        Incremental assistant response chunks as strings.
+    """
 
     prompt = load_yaml_config('prompts/prompt.yaml')['basic_prompt']
     
