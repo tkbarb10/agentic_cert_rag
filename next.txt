@@ -5,6 +5,8 @@
 - error handle text splitting in case of markdown syntax issues
 
 - set up store as retriever and update app to make this work all pretty like
+    - put store and retriever_tool set up into config
+    - same with web search
 
 - then option to either load_publications (in rag_lesson) or scrape the content
 

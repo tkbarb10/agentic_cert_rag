@@ -12,4 +12,4 @@ def load_env():
         print("Keys loaded successfully")
     except Exception as e:
         print("Issue loading api_keys")
-        print(f"Error: {e}")    
+        print(f"Error: {e}") 
